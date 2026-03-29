@@ -70,3 +70,88 @@
 2026-03-29T15:28:52.617+07:00  INFO 21771 --- [CyberWebApp] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-03-29T15:28:52.618+07:00  INFO 21771 --- [CyberWebApp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-03-29T15:28:52.623+07:00  INFO 21771 --- [CyberWebApp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+2026-03-29T17:00:18.487+07:00  WARN 21771 --- [CyberWebApp] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m24s927ms).
+2026-03-29T18:22:57.532+07:00  WARN 21771 --- [CyberWebApp] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h22m39s64ms).
+2026-03-29T19:10:31.628+07:00  WARN 21771 --- [CyberWebApp] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47m34s96ms).
+2026-03-29T19:28:45.862+07:00  WARN 21771 --- [CyberWebApp] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m14s233ms).
+2026-03-29T20:23:45.817+07:00  WARN 21771 --- [CyberWebApp] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m59s895ms).
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0 order by u1_0.point desc limit ?
+Hibernate: select u1_0.id,u1_0.address,u1_0.avatar,u1_0.coin,u1_0.email,u1_0.name,u1_0.password_hash,u1_0.phone,u1_0.point,u1_0.role,u1_0.username from user u1_0
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?
+Hibernate: select r1_0.id,r1_0.name from role r1_0 where r1_0.id=?

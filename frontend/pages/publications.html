@@ -6,26 +6,27 @@
             <h1 class="text-5xl font-headline font-bold text-white">Intelligence Briefings</h1>
         </div>
         
-        <div class="flex flex-wrap gap-4 mt-8 mb-12 border-b border-white/10 pb-4">
-            <button class="text-primary font-mono text-xs uppercase tracking-widest border-b-2 border-primary pb-2">ALL_RECORDS</button>
-            <button class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">CTF_WRITEUPS</button>
-            <button class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">MALWARE_ANALYSIS</button>
-            <button class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">ZERO_DAY</button>
+        <div class="flex flex-wrap gap-4 mt-8 mb-12 border-b border-white/10 pb-4" id="pub-filter-bar">
+            <button onclick="filterPublications('ALL', this)" class="text-primary font-mono text-xs uppercase tracking-widest border-b-2 border-primary pb-2 transition-all">ALL_RECORDS</button>
+            <button onclick="filterPublications('WEB_DEV', this)" class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">WEB_DEV</button>
+            <button onclick="filterPublications('ALGORITHMS', this)" class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">ALGORITHMS</button>
+            <button onclick="filterPublications('AI_ML', this)" class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">AI_ML</button>
+            <button onclick="filterPublications('CTF_WRITEUP', this)" class="text-gray-500 hover:text-white font-mono text-xs uppercase tracking-widest border-b-2 border-transparent hover:border-white/30 pb-2 transition-all">CTF_WRITEUP</button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="publications-grid">
-            
-            <div class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+
+            <div data-category="WEB_DEV" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
                 <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-primary font-mono text-[10px] tracking-widest uppercase border border-primary/20 px-2 py-0.5 bg-primary/5">MALWARE_ANALYSIS</span>
+                    <span class="text-blue-400 font-mono text-[10px] tracking-widest uppercase border border-blue-400/20 px-2 py-0.5 bg-blue-400/5">WEB_DEV</span>
                     <span class="text-gray-500 font-mono text-[10px] tracking-widest">26.MAR.2026</span>
                 </div>
                 <h3 class="text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors">
-                    Reverse Engineering the "Ransom.WannaCry.v3" Payload
+                    Building a Real-time Leaderboard with Spring Boot WebSocket & Vanilla JS
                 </h3>
                 <p class="text-gray-400 text-sm mb-6 line-clamp-3">
-                    An in-depth technical analysis of the latest variant of WannaCry ransomware, exploring its advanced obfuscation techniques and lateral movement protocols within enterprise networks.
+                    A step-by-step guide to implementing a live-updating leaderboard using Spring Boot's STOMP WebSocket support and a lightweight vanilla JS client — no framework required.
                 </p>
                 <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
                     <div class="flex items-center gap-2">
@@ -38,7 +39,30 @@
                 </div>
             </div>
 
-            <div class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+            <div data-category="ALGORITHMS" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+                <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-yellow-400 font-mono text-[10px] tracking-widest uppercase border border-yellow-400/20 px-2 py-0.5 bg-yellow-400/5">ALGORITHMS</span>
+                    <span class="text-gray-500 font-mono text-[10px] tracking-widest">20.MAR.2026</span>
+                </div>
+                <h3 class="text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors">
+                    Segment Trees & Lazy Propagation: Cracking ICPC Asia Regional Problems
+                </h3>
+                <p class="text-gray-400 text-sm mb-6 line-clamp-3">
+                    A deep-dive into implementing persistent segment trees with lazy propagation to solve range-update, range-query problems from the ICPC 2025 Asia Regional contest set.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-[#222] rounded-full flex items-center justify-center text-[10px] text-white font-bold border border-white/10">TT</div>
+                        <span class="text-gray-500 font-mono text-[10px] uppercase tracking-wider">Triệu Quang Thiện</span>
+                    </div>
+                    <span class="text-white font-mono text-[10px] uppercase tracking-widest group-hover:text-primary flex items-center gap-1 transition-colors">
+                        DECRYPT <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div data-category="CTF_WRITEUP" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
                 <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-purple-400 font-mono text-[10px] tracking-widest uppercase border border-purple-400/20 px-2 py-0.5 bg-purple-400/5">CTF_WRITEUP</span>
@@ -61,28 +85,75 @@
                 </div>
             </div>
 
-            <div class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+            <div data-category="AI_ML" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
                 <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-orange-400 font-mono text-[10px] tracking-widest uppercase border border-orange-400/20 px-2 py-0.5 bg-orange-400/5">ZERO_DAY</span>
-                    <span class="text-gray-500 font-mono text-[10px] tracking-widest">02.MAR.2026</span>
+                    <span class="text-pink-400 font-mono text-[10px] tracking-widest uppercase border border-pink-400/20 px-2 py-0.5 bg-pink-400/5">AI_ML</span>
+                    <span class="text-gray-500 font-mono text-[10px] tracking-widest">10.MAR.2026</span>
                 </div>
                 <h3 class="text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors">
-                    Bypassing Windows Defender with Custom Syscalls
+                    Fine-tuning LLaMA 3.1 for Vietnamese Sentiment Analysis
                 </h3>
                 <p class="text-gray-400 text-sm mb-6 line-clamp-3">
-                    Exploring the methodology of using direct system calls to evade user-land hooking and bypass EDR solutions in modern Windows environments.
+                    A practical walkthrough of LoRA fine-tuning LLaMA 3.1-8B on a Vietnamese social media dataset, covering data preprocessing, training configuration, and benchmark evaluation against GPT-4o.
                 </p>
                 <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
                     <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 bg-[#222] rounded-full flex items-center justify-center text-[10px] text-white font-bold border border-white/10">TT</div>
-                        <span class="text-gray-500 font-mono text-[10px] uppercase tracking-wider">Triệu Quang Thiện</span>
+                        <div class="w-6 h-6 bg-[#222] rounded-full flex items-center justify-center text-[10px] text-white font-bold border border-white/10">VB</div>
+                        <span class="text-gray-500 font-mono text-[10px] uppercase tracking-wider">Vương Trần Lâm Bình</span>
                     </div>
                     <span class="text-white font-mono text-[10px] uppercase tracking-widest group-hover:text-primary flex items-center gap-1 transition-colors">
                         DECRYPT <i class="fas fa-arrow-right"></i>
                     </span>
                 </div>
             </div>
+
+            <div data-category="WEB_DEV" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+                <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-blue-400 font-mono text-[10px] tracking-widest uppercase border border-blue-400/20 px-2 py-0.5 bg-blue-400/5">WEB_DEV</span>
+                    <span class="text-gray-500 font-mono text-[10px] tracking-widest">05.MAR.2026</span>
+                </div>
+                <h3 class="text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors">
+                    Containerizing Spring Boot with Docker & GitHub Actions CI/CD
+                </h3>
+                <p class="text-gray-400 text-sm mb-6 line-clamp-3">
+                    From zero to automated deployment: how we Dockerized the CyberTitans backend, wrote a multi-stage Dockerfile, and wired up a GitHub Actions pipeline to push images to Docker Hub on every merge.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-[#222] rounded-full flex items-center justify-center text-[10px] text-white font-bold border border-white/10">TN</div>
+                        <span class="text-gray-500 font-mono text-[10px] uppercase tracking-wider">Nguyễn Thu Ngọc</span>
+                    </div>
+                    <span class="text-white font-mono text-[10px] uppercase tracking-widest group-hover:text-primary flex items-center gap-1 transition-colors">
+                        DECRYPT <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div data-category="CTF_WRITEUP" class="group bg-[#0a0a0a] border border-white/10 p-6 relative overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer flex flex-col h-full">
+                <div class="absolute top-0 left-[-100%] w-full h-[2px] bg-primary group-hover:left-0 transition-all duration-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-purple-400 font-mono text-[10px] tracking-widest uppercase border border-purple-400/20 px-2 py-0.5 bg-purple-400/5">CTF_WRITEUP</span>
+                    <span class="text-gray-500 font-mono text-[10px] tracking-widest">02.MAR.2026</span>
+                </div>
+                <h3 class="text-white text-xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors">
+                    SQL Injection to RCE: Cracking the HackTheBox "Fortress" Machine
+                </h3>
+                <p class="text-gray-400 text-sm mb-6 line-clamp-3">
+                    A full walkthrough of chaining a blind SQL injection vulnerability with a misconfigured file upload endpoint to achieve Remote Code Execution on a hardened Linux target.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-[#222] rounded-full flex items-center justify-center text-[10px] text-white font-bold border border-white/10">NL</div>
+                        <span class="text-gray-500 font-mono text-[10px] uppercase tracking-wider">Nguyễn Văn Lợi</span>
+                    </div>
+                    <span class="text-white font-mono text-[10px] uppercase tracking-widest group-hover:text-primary flex items-center gap-1 transition-colors">
+                        DECRYPT <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="border-t border-white/10 pt-20 mt-10">

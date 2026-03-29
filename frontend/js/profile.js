@@ -386,7 +386,45 @@ function _pfRenderTimeline(experiences) {
 }
 
 function generateVerifiedCV() {
-    showToast('Generating secure PDF export... Feature coming online.', 'success');
+    const portfolio = document.getElementById('page-portfolio');
+    if (!portfolio) { showToast('Navigate to your portfolio first', 'error'); return; }
+
+    const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .map(l => `<link rel="stylesheet" href="${l.href}"/>`)
+        .join('');
+
+    const tailwindConfig = document.querySelector('script[src*="tailwindcss"]')?.outerHTML || '';
+    const configScript = document.querySelector('script:not([src])')?.outerHTML || '';
+    const gFonts = Array.from(document.querySelectorAll('link[href*="fonts.googleapis"]'))
+        .map(l => l.outerHTML).join('');
+
+    const html = `<!DOCTYPE html>
+<html class="dark">
+<head>
+<meta charset="utf-8"/>
+<title>CyberTitans — Verified CV</title>
+${tailwindConfig}
+${configScript}
+${gFonts}
+${styles}
+</head>
+<body class="bg-[#0e0e0e] text-white font-body p-8">
+${portfolio.innerHTML}
+<script>
+window.onload = function() {
+    document.querySelectorAll('.skill-bar-fill[data-w]').forEach(function(el) {
+        el.style.width = el.dataset.w + '%';
+    });
+    setTimeout(function() { window.print(); }, 600);
+};
+<\/script>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    showToast('CV export opened — print or save as PDF', 'success');
 }
 
 async function adminDeleteUser(userId) {
