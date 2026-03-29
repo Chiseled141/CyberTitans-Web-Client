@@ -178,6 +178,217 @@ function closeProfileModal() {
     if (modalContent) modalContent.classList.add('translate-x-full');
     setTimeout(() => document.getElementById('profile-modal').classList.add('hidden'), 300);
 }
+// ================================================================
+//  PORTFOLIO / VERIFIED CV — Proof of Work Center
+//  Sections: §1 Hero  §2 Stats  §3 Skills  §4 Timeline
+// ================================================================
+
+async function loadPortfolioData() {
+    const savedUserStr = sessionStorage.getItem('cyber_user') || localStorage.getItem('cyber_user');
+    const token = sessionStorage.getItem('cyber_token') || localStorage.getItem('cyber_token');
+    if (!savedUserStr || !token) return;
+
+    const currentUser = JSON.parse(savedUserStr);
+    if (!document.getElementById('portfolio-name')) return; // guard: page not in DOM yet
+
+    try {
+        const [userRes, rankRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/team/members/${currentUser.id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }),
+            fetch(`${API_BASE_URL}/ranking`).catch(() => null)
+        ]);
+
+        if (!userRes.ok) {
+            if (userRes.status === 401 || userRes.status === 403) logout();
+            return;
+        }
+
+        const user = await userRes.json();
+
+        // Match current user in public ranking list (by name)
+        let userRank = 0, userScore = 0;
+        if (rankRes && rankRes.ok) {
+            const rankList = await rankRes.json();
+            const idx = Array.isArray(rankList)
+                ? rankList.findIndex(r => r.name === user.name)
+                : -1;
+            if (idx >= 0) { userRank = idx + 1; userScore = rankList[idx].point || 0; }
+        }
+
+        _pfRenderHero(user);
+        _pfRenderStats(user, userRank, userScore);
+        _pfRenderSkills(user.experiences || []);
+        _pfRenderTimeline(user.experiences || []);
+
+    } catch (err) {
+        console.error("[PORTFOLIO]", err);
+    }
+}
+
+/* §1 — populate hero: avatar, name, role tag, UID, clearance, bio */
+function _pfRenderHero(user) {
+    const get = id => document.getElementById(id);
+    const set = (id, v) => { const el = get(id); if (el) el.textContent = v; };
+
+    const defaultAvt = `https://ui-avatars.com/api/?background=222&color=fff&name=${encodeURIComponent(user.name || 'Operative')}`;
+    const img = get('portfolio-avatar');
+    if (img) img.src = user.avatar || defaultAvt;
+
+    set('portfolio-name',          user.name || 'UNKNOWN OPERATIVE');
+    set('portfolio-uid',           String(user.id || 0).padStart(6, '0'));
+    set('portfolio-bio',           user.description || 'No briefing notes on file.');
+
+    // Role tag colour: admins get .tag-tertiary (purple), everyone else .tag-primary (green)
+    const roleTag = get('portfolio-role-tag');
+    if (roleTag) {
+        const isAdmin = user.role === 'ADMIN' || user.role === 'SUPER ADMIN';
+        roleTag.textContent = user.role || 'MEMBER';
+        roleTag.className   = (isAdmin ? 'tag-tertiary' : 'tag-primary') +
+                              ' px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest shrink-0';
+    }
+
+    const clearanceMap = { 'SUPER ADMIN': 'CLEARANCE: OMEGA', 'ADMIN': 'CLEARANCE: ALPHA' };
+    set('portfolio-clearance-line', clearanceMap[user.role] || `CLEARANCE: ${user.role || 'DELTA'}`);
+}
+
+/* §2 — populate stat cards */
+function _pfRenderStats(user, rank, score) {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    set('pf-xp',       score > 0 ? score.toLocaleString() : '0');
+    set('pf-stat-rank', rank > 0 ? `#${rank}` : '#--');
+    set('pf-projects',  (user.experiences || []).length);
+    // Workshops = experiences that recorded a courseInfo (training/course data present)
+    set('pf-workshops', (user.experiences || []).filter(e => e.courseInfo && e.courseInfo.trim()).length);
+}
+
+/* §3 — build verified skill tag pills */
+function _pfRenderSkills(experiences) {
+    const certEl = document.getElementById('pf-skills-certified');
+    const declEl = document.getElementById('pf-skills-declared');
+    if (!certEl || !declEl) return;
+
+    const certified = new Set();
+    const declared  = new Set();
+
+    experiences.forEach(exp => {
+        if (!exp.courseInfo) return;
+        const parts = exp.courseInfo.includes(';')
+            ? exp.courseInfo.split(';')
+            : exp.courseInfo.split(',');
+        parts.forEach(p => {
+            p = p.trim();
+            if (!p) return;
+            p.includes('@#')
+                ? certified.add(p.split('@#')[0].trim())
+                : declared.add(p);
+        });
+    });
+
+    // Verified icon used inside every pill
+    const checkIcon = `<span class="material-symbols-outlined" ` +
+        `style="font-size:10px;font-variation-settings:'FILL' 1;line-height:1">check_circle</span>`;
+
+    certEl.innerHTML = certified.size
+        ? [...certified].map(n =>
+            `<span class="pf-skill-tag tag-primary">${checkIcon}${n}</span>`
+          ).join('')
+        : '<span class="font-mono text-[10px] text-on-surface-variant italic">No system-certified skills on record.</span>';
+
+    const altClass = ['tag-secondary', 'tag-tertiary'];
+    declEl.innerHTML = declared.size
+        ? [...declared].map((n, i) =>
+            `<span class="pf-skill-tag ${altClass[i % 2]}">${checkIcon}${n}</span>`
+          ).join('')
+        : '<span class="font-mono text-[10px] text-on-surface-variant italic">No declared skills on record.</span>';
+}
+
+/* §4 — build proof-of-work vertical timeline */
+function _pfRenderTimeline(experiences) {
+    const container = document.getElementById('pf-timeline-container');
+    if (!container) return;
+
+    if (!experiences.length) {
+        container.innerHTML = `<div class="pf-timeline-line"></div>
+            <p class="font-mono text-[10px] text-on-surface-variant italic pl-2">No proof-of-work records on file.</p>`;
+        return;
+    }
+
+    // Active deployments first, then newest by startDate
+    const sorted = [...experiences].sort((a, b) => {
+        const aLive = !a.endDate || a.endDate.toUpperCase() === 'PRESENT';
+        const bLive = !b.endDate || b.endDate.toUpperCase() === 'PRESENT';
+        if (aLive && !bLive) return -1;
+        if (!aLive && bLive) return 1;
+        return (b.startDate || '').localeCompare(a.startDate || '');
+    });
+
+    const nodes = sorted.map(exp => {
+        const isLive = !exp.endDate || exp.endDate.toUpperCase() === 'PRESENT';
+
+        const statusTag = isLive
+            ? `<span class="tag-primary px-2 py-0.5 text-[8px] font-mono">ACTIVE</span>`
+            : `<span class="tag-secondary px-2 py-0.5 text-[8px] font-mono">COMPLETED</span>`;
+
+        // Skill chips (max 5) — certified chips show a verified icon
+        let skillsHTML = '';
+        if (exp.courseInfo) {
+            const parts = (exp.courseInfo.includes(';')
+                ? exp.courseInfo.split(';')
+                : exp.courseInfo.split(','))
+                .filter(p => p.trim()).slice(0, 5);
+
+            const chips = parts.map(p => {
+                const isCert = p.includes('@#');
+                const name   = (isCert ? p.split('@#')[0] : p).trim();
+                const icon   = isCert
+                    ? `<span class="material-symbols-outlined" style="font-size:9px;font-variation-settings:'FILL' 1;line-height:1">verified</span>`
+                    : '';
+                return name
+                    ? `<span class="${isCert ? 'tag-tertiary' : 'tag-secondary'} px-2 py-0.5 text-[8px] font-mono inline-flex items-center gap-1">${icon}${name}</span>`
+                    : '';
+            }).join('');
+            if (chips) skillsHTML = `<div class="flex flex-wrap gap-1.5 mt-3">${chips}</div>`;
+        }
+
+        return `
+        <div class="pf-timeline-node">
+          <div class="pf-timeline-dot ${isLive ? '' : 'inactive'}"></div>
+          <div class="glass-panel pf-timeline-card">
+            <div class="flex items-start justify-between gap-3 flex-wrap">
+              <div class="space-y-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${statusTag}
+                  <span class="font-mono text-[9px] text-on-surface-variant tracking-widest">
+                    ${exp.startDate || '???'} — ${exp.endDate || 'PRESENT'}
+                  </span>
+                </div>
+                <h3 class="font-headline text-base font-bold text-white leading-tight">
+                  ${exp.organizationName || 'Unnamed Organisation'}
+                </h3>
+                <p class="font-mono text-[10px] ${isLive ? 'text-primary' : 'text-on-surface-variant'} uppercase tracking-widest">
+                  ${exp.positionTitle || 'OPERATIVE'}
+                </p>
+              </div>
+              <button onclick="showToast('Project details coming soon!', 'success')"
+                class="shrink-0 text-[9px] font-mono text-on-surface-variant border border-outline-variant/30 px-3 py-1.5 hover:border-primary hover:text-primary transition-all uppercase tracking-widest flex items-center gap-1.5">
+                <span class="material-symbols-outlined" style="font-size:12px;line-height:1">open_in_new</span>
+                VIEW
+              </button>
+            </div>
+            ${skillsHTML}
+          </div>
+        </div>`;
+    }).join('');
+
+    container.innerHTML = `<div class="pf-timeline-line"></div>${nodes}`;
+}
+
+function generateVerifiedCV() {
+    showToast('Generating secure PDF export... Feature coming online.', 'success');
+}
+
 async function adminDeleteUser(userId) {
     const confirmation = confirm("⚠️ WARNING: You are sure you want to expel this member from the system?");
     if (!confirmation) return;

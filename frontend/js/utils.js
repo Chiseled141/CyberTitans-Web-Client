@@ -1,12 +1,12 @@
 async function includeHTML() {
-    const elements = document.querySelectorAll('[include-html]');
-    for (let el of elements) {
+    const elements = [...document.querySelectorAll('[include-html]')];
+    await Promise.all(elements.map(async (el) => {
         const file = el.getAttribute('include-html');
         try {
             const response = await fetch(file + '?v=' + new Date().getTime());
             if (response.ok) el.outerHTML = await response.text();
         } catch (err) { console.error("[SYSTEM] Lỗi nạp HTML:", err); }
-    }
+    }));
     initializeApp();
 }
 
@@ -16,6 +16,7 @@ function showPage(name) {
     if (el) el.classList.add('active');
     document.querySelectorAll('.nav-link').forEach(a => a.classList.toggle('nav-active', a.dataset.page === name));
     if (name === 'my-profile') loadOperativeData();
+    if (name === 'portfolio')  loadPortfolioData();
     window.scrollTo(0, 0);
 }
 

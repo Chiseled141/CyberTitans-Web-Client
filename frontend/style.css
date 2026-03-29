@@ -268,3 +268,300 @@ nav a.nav-active {
 .hack-card:hover .scanner {
     display: block; /* Hiện khi hover */
 }
+
+/* ================================================================
+   PORTFOLIO / VERIFIED CV  — page-portfolio specific styles
+   ================================================================ */
+
+/* ── Skill Matrix Progress Bars ──────────────────────────────── */
+.skill-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skill-bar-fill.verified {
+  background: linear-gradient(90deg, #2be800, #8eff71);
+  box-shadow: 0 0 8px rgba(142, 255, 113, 0.45);
+}
+
+.skill-bar-fill.certified {
+  background: linear-gradient(90deg, #9a3fd4, #d575ff);
+  box-shadow: 0 0 8px rgba(213, 117, 255, 0.45);
+}
+
+.skill-bar-fill.declared {
+  background: linear-gradient(90deg, #5a7aad, #bad3fc);
+}
+
+/* ── Achievement Badge Cards ─────────────────────────────────── */
+.badge-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.875rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.badge-card.unlocked {
+  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.badge-card.unlocked:hover {
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.18);
+  transform: translateY(-2px);
+}
+
+.badge-card.locked {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+.badge-card .badge-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.badge-card .badge-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #adaaaa;
+  line-height: 1.3;
+}
+
+.badge-card.unlocked .badge-name {
+  color: #D4AF37;
+}
+
+.badge-card .badge-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  background: #D4AF37;
+  border-radius: 50%;
+}
+
+/* ── Portfolio scanner: slightly slower sweep ────────────────── */
+#page-portfolio .hack-card .scanner {
+  animation-duration: 3s;
+}
+
+/* ── Syslog custom scrollbar ─────────────────────────────────── */
+#portfolio-syslog::-webkit-scrollbar { width: 2px; }
+#portfolio-syslog::-webkit-scrollbar-thumb { background: rgba(142, 255, 113, 0.5); }
+
+/* ── Glitch flicker on operative name ───────────────────────── */
+@keyframes glitch {
+  0%, 92%, 100% { transform: none; opacity: 1; }
+  93%  { transform: skewX(-1deg); opacity: 0.8; }
+  95%  { transform: skewX(0.5deg) translateX(1px); opacity: 1; }
+  97%  { transform: skewX(-0.5deg); opacity: 0.9; }
+  99%  { transform: none; opacity: 1; }
+}
+
+.portfolio-verified-text {
+  display: inline-block;
+  animation: glitch 6s infinite;
+}
+
+/* ================================================================
+   PROFILE HERO / PORTFOLIO  — Cover, Avatar, Stats, Skills,
+   Proof-of-Work Timeline
+   (Profile/CV Module)
+   ================================================================ */
+
+/* ── §1 Panoramic Cover ─────────────────────────────────────── */
+.pf-cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #080808;
+}
+
+/* Dual radial ambient glow inside cover */
+.pf-cover-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 90% at 12% 60%, rgba(142, 255, 113, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 60% at 88% 20%, rgba(213, 117, 255, 0.05) 0%, transparent 60%);
+}
+
+/* Horizontal scan line sweeping top → bottom across the cover */
+@keyframes cover-scan {
+  0%   { top: 0%;   opacity: 0; }
+  5%   { opacity: 0.9; }
+  90%  { opacity: 0.5; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.pf-cover-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(142, 255, 113, 0.55) 30%,
+    rgba(142, 255, 113, 0.55) 70%,
+    transparent 100%
+  );
+  animation: cover-scan 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── §1 "Verified CyberTitan" Glowing Badge ─────────────────── */
+.pf-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: rgba(142, 255, 113, 0.07);
+  border: 1px solid rgba(142, 255, 113, 0.35);
+  color: #8eff71;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  animation: badge-pulse 3s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(142, 255, 113, 0.20),
+                inset 0 0 10px rgba(142, 255, 113, 0.04);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(142, 255, 113, 0.40),
+                inset 0 0 16px rgba(142, 255, 113, 0.08);
+  }
+}
+
+/* ── §1 Circular Avatar with Neon Ring ──────────────────────── */
+.pf-avatar-ring {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2px solid rgba(142, 255, 113, 0.45);
+  box-shadow:
+    0 0 18px rgba(142, 255, 113, 0.22),
+    0 0 0 4px rgba(142, 255, 113, 0.07);
+  overflow: hidden;
+  background: #111;
+  flex-shrink: 0;
+}
+
+/* ── §2 Stat Cards ──────────────────────────────────────────── */
+/* Extends .hack-card and .glass-panel — use all three classes */
+.pf-stat-card {
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.pf-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ── §3 Verified Skill Tag Pills ────────────────────────────── */
+/* Extends existing .tag-primary / .tag-secondary / .tag-tertiary */
+.pf-skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  transition: filter 0.2s ease, transform 0.2s ease;
+  cursor: default;
+}
+
+.pf-skill-tag:hover {
+  filter: brightness(1.25);
+  transform: translateY(-1px);
+}
+
+/* ── §4 Proof-of-Work Vertical Timeline ─────────────────────── */
+.pf-timeline {
+  position: relative;
+  padding-left: 2.25rem;
+}
+
+/* The glowing vertical spine */
+.pf-timeline-line {
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(142, 255, 113, 0.70),
+    rgba(142, 255, 113, 0.15) 60%,
+    transparent
+  );
+}
+
+.pf-timeline-node {
+  position: relative;
+  margin-bottom: 1.75rem;
+}
+
+/* Active dot — neon green with glow */
+.pf-timeline-dot {
+  position: absolute;
+  left: -2.25rem;
+  top: 1.25rem;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #8eff71;
+  background: #0e0e0e;
+  box-shadow: 0 0 10px rgba(142, 255, 113, 0.55);
+  z-index: 1;
+}
+
+/* Inactive dot — muted */
+.pf-timeline-dot.inactive {
+  border-color: #484847;
+  box-shadow: none;
+}
+
+/* Timeline card — extends .glass-panel */
+.pf-timeline-card {
+  border: 1px solid rgba(72, 72, 71, 0.25);
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pf-timeline-card:hover {
+  border-color: rgba(142, 255, 113, 0.22);
+  box-shadow: 0 0 16px rgba(142, 255, 113, 0.05);
+}

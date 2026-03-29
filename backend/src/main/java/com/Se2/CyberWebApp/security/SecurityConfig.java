@@ -1,9 +1,10 @@
 package com.Se2.CyberWebApp.security;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod; // Thêm thư viện này
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,35 +23,41 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                // 1. CẤU HÌNH CORS CHUẨN
                 .cors(cors -> cors.configurationSource(request -> {
-                    var cache = new org.springframework.web.cors.CorsConfiguration();
-                    cache.setAllowedOrigins(java.util.List.of("http://127.0.0.1:5500", "http://localhost:5500"));
-                    cache.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    cache.setAllowedHeaders(java.util.List.of("*"));
-                    cache.setAllowCredentials(true);
-                    return cache;
+                    var config = new org.springframework.web.cors.CorsConfiguration();
+                    config.setAllowedOrigins(java.util.List.of(
+                        "http://127.0.0.1:5500", "http://localhost:5500",
+                        "http://127.0.0.1:8000", "http://localhost:8000"
+                    ));
+                    config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(java.util.List.of("*"));
+                    config.setAllowCredentials(true);
+                    return config;
                 }))
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(ex -> ex
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.setStatus(401);
+                        response.setContentType("application/json");
+                        response.getWriter().write("{\"error\":\"Unauthorized\"}");
+                    })
+                )
                 .authorizeHttpRequests(auth -> auth
-                        // 1. GUEST: Các API mở cửa tự do
+                        // Allow all FORWARD and ERROR dispatches (Spring MVC internal dispatches)
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        // Public endpoints
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/ranking").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/ranking/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/team/members").permitAll()
-
-                        // 2. ADMIN: Khu vực tuyệt mật
-                        .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/team/members/**")
-                        .hasAnyAuthority("ADMIN", "SUPER ADMIN")
-                        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/v1/team/members/**").hasAnyAuthority("ADMIN", "SUPER ADMIN")
-
-                        // 3. MENTOR: Chỉ sư phụ mới có quyền phản hồi request
+                        // ADMIN only
+                        .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN", "SUPER ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/team/members/**").hasAnyAuthority("ADMIN", "SUPER ADMIN")
+                        // MENTOR only
                         .requestMatchers("/api/v1/mentor/responses").hasAuthority("MENTOR")
-
-                        // 4. Các quyền cơ bản khi đã đăng nhập
+                        // Authenticated users
                         .requestMatchers("/api/v1/team/members/**").authenticated()
-
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

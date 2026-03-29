@@ -87,6 +87,53 @@
   </div>
 </div>
 
+<div id="signup-modal" class="modal-backdrop" onclick="handleBackdropClick(event, 'signup-modal')">
+  <div class="max-w-md w-full bg-[#131313] border border-outline-variant/30 p-10 relative shadow-2xl" onclick="event.stopPropagation()">
+    <button onclick="closeModal('signup-modal')" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <header class="mb-8">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-2 h-2 bg-primary animate-pulse"></span>
+        <span class="font-mono text-[10px] uppercase tracking-widest text-primary">NEW_OPERATIVE.EXE</span>
+      </div>
+      <h2 class="font-headline text-3xl font-bold tracking-tight uppercase text-white">Join the Network</h2>
+      <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-outline-variant/20">
+        <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">REGISTERING NEW NODE</span>
+      </div>
+    </header>
+
+    <div class="space-y-5">
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Full Name</label>
+        <input type="text" id="signup-name" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="John Doe"/>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Username</label>
+        <input type="text" id="signup-username" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="operative_handle"/>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Email</label>
+        <input type="email" id="signup-email" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="operative@domain.com"/>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Password</label>
+        <input type="password" id="signup-password" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="••••••••"/>
+      </div>
+
+      <button onclick="executeSignUp()" class="w-full bg-primary hover:brightness-110 text-[#0d6100] font-headline font-black uppercase tracking-widest py-4 text-sm transition-all flex items-center justify-center gap-3">
+        Register Operative <span class="material-symbols-outlined text-lg">person_add</span>
+      </button>
+
+      <div class="text-center pt-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+        Already registered?
+        <a href="#" onclick="switchToLogin(); return false;" class="text-primary hover:brightness-110 ml-1">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="article-modal" class="modal-backdrop" onclick="handleBackdropClick(event, 'article-modal')">
   <div class="max-w-2xl w-full bg-surface-container-low border border-outline-variant/15 p-10 relative overflow-hidden" onclick="event.stopPropagation()">
     <button onclick="closeModal('article-modal')" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">

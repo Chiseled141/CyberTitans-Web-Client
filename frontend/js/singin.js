@@ -42,18 +42,17 @@ async function executeSignUp() {
     }
 }
 
-// Helper functions to switch between modals
+// Helper functions to switch between modals (use the .open class system from utils.js)
 function switchToSignUp() {
-    // Assuming your login modal has id="login-modal"
-    document.getElementById('login-modal').classList.add('hidden'); 
-    document.getElementById('signup-modal').classList.remove('hidden');
+    closeModal('login-modal');
+    openModal('signup-modal');
 }
 
 function switchToLogin() {
-    document.getElementById('signup-modal').classList.add('hidden');
-    document.getElementById('login-modal').classList.remove('hidden');
+    closeModal('signup-modal');
+    openModal('login-modal');
 }
 
 function closeSignUpModal() {
-    document.getElementById('signup-modal').classList.add('hidden');
+    closeModal('signup-modal');
 }
